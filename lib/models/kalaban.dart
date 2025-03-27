@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:learnflame/main.dart';
 import 'package:learnflame/models/kalabanList.dart';
 
@@ -14,7 +15,7 @@ class Kalaban extends SpriteComponent with TapCallbacks, HasGameRef<MyGame> {
 
     sprite =
         await Sprite.load('characters/${KALABAN[kalabanIndex]["name"]}.png');
-    size = Vector2(size[0], size[0] * 1.5);
+    size = Vector2(size[0] * 1.2, size[0] * 1.8);
     position = Vector2(size[0] / 2, mPosY);
     anchor = Anchor.center;
   }

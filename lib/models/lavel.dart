@@ -28,8 +28,12 @@ class Level extends PositionComponent with HasGameRef<MyGame> {
     add(levelLabel);
   }
 
-  void updateLevel() {
-    level++;
+  void updateLevel({int? l}) {
+    if (l == null) {
+      level++;
+    } else {
+      level = l;
+    }
     levelLabel.text = level.toString();
   }
 }

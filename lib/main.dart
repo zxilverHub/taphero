@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learnflame/models/armas.dart';
@@ -15,9 +16,10 @@ import 'package:learnflame/models/kalaban.dart';
 import 'package:learnflame/models/kalabanList.dart';
 import 'package:learnflame/models/lavel.dart';
 import 'package:learnflame/models/lifebar.dart';
+import 'package:learnflame/models/startscreen.dart';
 
 void main() {
-  runApp(GameWidget(game: MyGame()));
+  runApp(SafeArea(child: GameWidget(game: MyGame())));
 }
 
 class MyGame extends FlameGame {
@@ -47,6 +49,8 @@ class MyGame extends FlameGame {
   Armas armas2 = Armas("${ARMAS[1]}.png", 1);
   Armas armas3 = Armas("${ARMAS[2]}.png", 2);
   Armas armas4 = Armas("${ARMAS[3]}.png", 3);
+
+  StartScreen startcomp = StartScreen();
 
   @override
   Future<void> onLoad() async {
@@ -94,7 +98,7 @@ class MyGame extends FlameGame {
     pc.add(armas4);
 
     life
-      ..position = Vector2(10, size[0] + 50)
+      ..position = Vector2(10, size[0] + 200)
       ..size = Vector2(size[0] - 20, 5)
       ..priority = 115;
 
@@ -115,6 +119,9 @@ class MyGame extends FlameGame {
     add(scroll);
     add(b1);
     add(kalaban);
+    add(startcomp);
+
+    FlameAudio.bgm.play("bm1.mp3");
   }
 
   void setWeapon(int index) async {
@@ -135,6 +142,10 @@ class MyGame extends FlameGame {
         armas[i].armasImg.size = armas[i].size;
       }
     }
+  }
+
+  void startGame() {
+    remove(startcomp);
   }
 
   void showDamage(Vector2 pos) {
@@ -193,9 +204,9 @@ class MyGame extends FlameGame {
     kalabanIdex;
     energy = 30;
     sandata = 0;
-    level.level = 1;
     energyComp.updateEnergy(energy);
     lifeBar.size = Vector2(0, 5);
+    level.updateLevel(l: 1);
 
     remove(over);
   }
